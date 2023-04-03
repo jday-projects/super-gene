@@ -1,6 +1,8 @@
 
 module Superpermutations
 
+using Combinatorics
+
 export overlap
 export generate_similarity_matrix
 export high_perm_fitness
@@ -27,13 +29,9 @@ function generate_similarity_matrix(n)
 
 end
 
-function high_perm_fitness(high_perm, n)
+function high_perm_fitness(high_perm, similarity_matrix)
 
-    total_overlap = 0
-    similarity_matrix = generate_similarity_matrix(n)
-    for i in 2:length(high_perm)
-        global total_overlap += similarity_matrix[high_perm[i-1], high_perm[i]]
-    end
+    total_overlap = sum([similarity_matrix[high_perm[i-1], high_perm[i]] for i in 2:length(high_perm)])
 
     return(total_overlap)
 
